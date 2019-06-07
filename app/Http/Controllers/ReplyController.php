@@ -40,7 +40,7 @@ class ReplyController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store($channelId, Thread $thread)
+    public function store($channel, Thread $thread)
     {
         $this->validate(request(), [
             'body' => 'required',
@@ -50,7 +50,7 @@ class ReplyController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return back();
+        return back()->with('flash', 'Your reply has been left.');
 
     }
 
