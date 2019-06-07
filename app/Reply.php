@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
-    protected  $fillable = [];
-
+    protected $guarded = [];
 
     public function owner()
     {
