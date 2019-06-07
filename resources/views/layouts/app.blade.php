@@ -72,7 +72,7 @@
                             @endif
 
                             <li><a href="/threads?popularity=1">Popular Threads</a> </li>
-                            
+
                         </ul>
                     </li>
 
