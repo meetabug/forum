@@ -19,4 +19,7 @@ Route::get('threads/{channel}', 'ThreadController@index');
 Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 
 //点赞
-Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
+Route::post('/replies/{reply}/favorites', 'FavoriteController@store');
+
+//个人中心
+Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');
