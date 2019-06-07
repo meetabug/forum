@@ -22,7 +22,7 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel,ThreadsFilters $filters)
+    public function index(Channel $channel, ThreadsFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);
 
@@ -76,7 +76,10 @@ class ThreadController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'thread'  => $thread,
+            'replies' => $thread->replies()->paginate(10),
+        ]);
     }
 
     /**
