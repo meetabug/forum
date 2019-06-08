@@ -30,7 +30,7 @@ class ThreadController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-        $threads = $threads->get();
+        $threads = $threads->paginate(10);
 
         return view('threads.index', compact('threads'));
     }
@@ -66,7 +66,7 @@ class ThreadController extends Controller
         ]);
 
         return redirect($thread->path())
-            ->with('flash','Your thread has been published!');
+            ->with('flash', 'Your thread has been published!');
     }
 
     /**
@@ -114,7 +114,7 @@ class ThreadController extends Controller
      */
     public function destroy($channel, Thread $thread)
     {
-        $this->authorize('update',$thread);
+        $this->authorize('update', $thread);
         $thread->delete();
 
         return redirect('/threads');

@@ -27,6 +27,8 @@
                 @empty
                     <p>There are no relevant results at this time.</p>
                 @endforelse
+
+                {{ $threads->links() }}
             </div>
         </div>
     </div>

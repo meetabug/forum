@@ -14,6 +14,7 @@ Route::get('threads/{channel}', 'ThreadController@index');
 
 //回复
 Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
+Route::patch('/replies/{reply}', 'ReplyController@update');
 Route::delete('/replies/{reply}', 'ReplyController@destroy');
 
 //点赞
