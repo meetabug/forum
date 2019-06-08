@@ -24,3 +24,9 @@ Route::delete('/replies/{reply}/favorites', 'FavoriteController@destroy');
 
 //个人中心
 Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');
+
+//订阅
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store');
+Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@destroy');
+Route::get('/profiles/{user}/notifications', 'UserNotificationController@index');
+Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationController@destroy');
