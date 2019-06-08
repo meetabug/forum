@@ -18,6 +18,7 @@ Route::get('threads/{channel}', 'ThreadController@index');
 
 //回复
 Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
+Route::delete('/replies/{reply}', 'ReplyController@destroy');
 
 //点赞
 Route::post('/replies/{reply}/favorites', 'FavoriteController@store');
