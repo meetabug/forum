@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 
-class UserNotficationController extends Controller
+class UserNotificationController extends Controller
 {
     public function __construct()
     {
