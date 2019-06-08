@@ -1,12 +1,8 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ThreadController@index');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 //话题
 Route::get('threads', 'ThreadController@index');
