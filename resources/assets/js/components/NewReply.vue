@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="signedIn">
+        <div v-if="signIn">
             <div class="form-group">
                 <textarea name="body"
                           id="body"
@@ -25,27 +25,25 @@
 
 <script>
     export default {
-        props: ['endpoint'],
-
         data() {
             return {
-                body: ''
+                body: '',
             };
         },
 
         computed: {
-            signedIn() {
+            signIn() {
                 return window.App.signIn;
             }
         },
 
         methods: {
             addReply() {
-                axios.post(this.endpoint, {body: this.body})
+                axios.post(location.pathname + '/replies', {body: this.body})
                     .then(({data}) => {
                         this.body = '';
 
-                        flash('Your reply has been posted.');
+                        flash('回复已提交!');
 
                         this.$emit('created', data);
                     });
@@ -53,3 +51,4 @@
         }
     }
 </script>
+在 Replies.v
