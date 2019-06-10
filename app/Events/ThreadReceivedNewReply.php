@@ -2,14 +2,18 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ThreadHasNewReply
+class ThreadReceivedNewReply
 {
-    use SerializesModels;
+    use Dispatchable, SerializesModels;
 
-    public $thread;
     public $reply;
 
     /**
@@ -17,10 +21,8 @@ class ThreadHasNewReply
      *
      * @return void
      */
-    public function __construct($thread, $reply)
+    public function __construct($reply)
     {
-        //
-        $this->thread = $thread;
         $this->reply = $reply;
     }
 

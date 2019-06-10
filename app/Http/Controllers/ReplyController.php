@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Inspections\Spam;
+use App\Notifications\YouWereMentioned;
 use App\Reply;
 use App\Thread;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -45,7 +47,7 @@ class ReplyController extends Controller
      */
     public function store($channel, Thread $thread, CreatePostRequest $request)
     {
-        return $reply = $thread->addReply([
+        return $thread->addReply([
             'body'    => request('body'),
             'user_id' => auth()->id(),
         ])->load('owner');
@@ -84,15 +86,9 @@ class ReplyController extends Controller
     {
         $this->authorize('update', $reply);
 
-        try {
-            $this->validate(request(), ['body' => 'required|spamfree']);
+        $this->validate(request(), ['body' => 'required|spamfree']);
 
-            $reply->update(request(['body']));
-        } catch (\Exception $e) {
-            return response(
-                'Sorry,your reply could not be saved at this time.', 422
-            );
-        }
+        $reply->update(request(['body']));
     }
 
     /**

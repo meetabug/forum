@@ -39,6 +39,7 @@
 
                     page = query ? query[1] : 1;
                 }
+                console.log(`${location.pathname}/replies?page=${page}`);
 
                 return `${location.pathname}/replies?page=${page}`;
             },

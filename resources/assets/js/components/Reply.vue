@@ -16,19 +16,21 @@
 
         <div class="panel-body">
             <div v-if="editing">
-                <div class="form-group">
-                    <textarea class="form-control" v-model="body"></textarea>
-                </div>
+                <form @submit.prevent="update">
+                    <div class="form-group">
+                        <textarea class="form-control" v-model="body" required></textarea>
+                    </div>
 
-                <button class="btn btn-xs btn-primary" @click="update">Update</button>
-                <button class="btn btn-xs btn-link" @click="editing = false">Cancel</button>
+                    <button class="btn btn-xs btn-primary">Update</button>
+                    <button class="btn btn-xs btn-link" @click="cancelReply" type="button">Cancel</button>
+                </form>
             </div>
 
             <div v-else v-text="body"></div>
         </div>
 
         <div class="panel-footer level" v-if="canUpdate">
-            <button class="btn btn-xs mr-1" @click="editing = true">Edit</button>
+            <button class="btn btn-xs mr-1" @click="editReply">Edit</button>
             <button class="btn btn-xs btn-danger mr-1" @click="destroy">Delete</button>
         </div>
 
@@ -81,7 +83,18 @@
                 axios.delete('/replies/' + this.data.id);
 
                 this.$emit('deleted', this.data.id);
-            }
+            },
+
+            editReply() {
+                this.old_body_data = this.body;
+                this.editing = true;
+            },
+
+            cancelReply() {
+                this.body = this.old_body_data;
+                this.old_body_data = '';
+                this.editing = false;
+            },
         }
     }
 </script>
