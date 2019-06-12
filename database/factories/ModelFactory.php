@@ -22,7 +22,9 @@ $factory->define(App\Channel::class, function ($faker) {
     ];
 });
 
-$factory->define(App\Thread::class, function (Faker $faker) {
+$factory->define(App\Thread::class, function ($faker) {
+    $title = $faker->sentence;
+
     return [
         'user_id'    => function () {
             return factory('App\User')->create()->id;
@@ -30,9 +32,10 @@ $factory->define(App\Thread::class, function (Faker $faker) {
         'channel_id' => function () {
             return factory('App\Channel')->create()->id;
         },
-        'title'      => $faker->sentence,
+        'title'      => $title,
         'body'       => $faker->paragraph,
         'visits'     => 0,
+        'slug'       => str_slug($title),
     ];
 });
 
