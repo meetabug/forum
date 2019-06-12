@@ -6,8 +6,10 @@ use App\Channel;
 use App\Filters\ThreadsFilters;
 use App\Inspections\Spam;
 use App\Thread;
+use App\Trending;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadController extends Controller
 {
@@ -23,7 +25,7 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadsFilters $filters)
+    public function index(Channel $channel, ThreadsFilters $filters, Trending $trending)
     {
         $threads = Thread::latest()->filter($filters);
         if ($channel->exists) {
@@ -32,7 +34,10 @@ class ThreadController extends Controller
 
         $threads = $threads->paginate(10);
 
-        return view('threads.index', compact('threads'));
+        return view('threads.index', [
+            'threads'  => $threads,
+            'trending' => $trending->get(),
+        ]);
     }
 
     /**
@@ -76,11 +81,13 @@ class ThreadController extends Controller
      * @param \App\Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channel, Thread $thread)
+    public function show($channel, Thread $thread, Trending $trending)
     {
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
+
+        $trending->push($thread);
 
         return view('threads.show', compact('thread'));
     }
