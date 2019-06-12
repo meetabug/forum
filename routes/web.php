@@ -31,4 +31,8 @@ Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionCo
 Route::get('/profiles/{user}/notifications', 'UserNotificationController@index');
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationController@destroy');
 
+//@用户名搜索
 Route::get('api/users', 'Api\UserController@index');
+
+//用户头像上传
+Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->name('avatar');
