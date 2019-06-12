@@ -18,6 +18,18 @@ class User extends Authenticatable
         'name', 'email', 'password', 'avatar_path',
     ];
 
+    protected $casts = [
+        'confirmed' => 'boolean',
+    ];
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+        $this->confirmation_token = null;
+
+        $this->save();
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
