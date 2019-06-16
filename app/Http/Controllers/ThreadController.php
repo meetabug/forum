@@ -55,13 +55,13 @@ class ThreadController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Recaptcha $recaptch)
+    public function store(Recaptcha $recaptch)
     {
-        $this->validate($request, [
+        request()->validate([
             'title'                => 'required|spamfree',
             'body'                 => 'required|spamfree',
             'channel_id'           => 'required|exists:channels,id',
-            'g-recaptcha-response' => ['required', $recaptch],
+            'g-recaptcha-response' => ['required', $recaptcha],
         ]);
 
         $thread = Thread::create([
@@ -109,16 +109,17 @@ class ThreadController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Thread $thread
-     * @return \Illuminate\Http\Response
-     */
     public function update($channel, Thread $thread)
     {
+        // 应用授权策略
+        $this->authorize('update', $thread);
+        // 验证规则
+        $thread->update(request()->validate([
+            'title' => 'required|spamfree',
+            'body'  => 'required|spamfree',
+        ]));
 
+        return $thread;
     }
 
     /**

@@ -31,6 +31,10 @@
             align-items: center;
         }
 
+        .level-item {
+            margin-right: 1em;
+        }
+
         .flex {
             flex: 1
         }

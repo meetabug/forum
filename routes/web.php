@@ -4,13 +4,20 @@ Route::get('/', 'ThreadController@index');
 
 Auth::routes();
 
+
+//话题搜索
+Route::get('threads/search', 'SearchController@show');
+
 //话题
 Route::get('threads', 'ThreadController@index')->name('threads');
 Route::get('threads/create', 'ThreadController@create');
 Route::get('threads/{channel}/{thread}', 'ThreadController@show');
+Route::patch('threads/{channel}/{thread}', 'ThreadController@update');
 Route::post('threads', 'ThreadController@store');
 Route::delete('threads/{channel}/{thread}', 'ThreadController@destroy');
 Route::get('threads/{channel}', 'ThreadController@index');
+
+
 //话题锁定
 Route::post('locked-threads/{thread}', 'LockedThreadController@store')->name('locked-threads.store');
 Route::delete('locked-threads/{thread}', 'LockedThreadController@destroy')->name('locked-threads.destroy');
