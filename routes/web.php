@@ -11,6 +11,9 @@ Route::get('threads/{channel}/{thread}', 'ThreadController@show');
 Route::post('threads', 'ThreadController@store');
 Route::delete('threads/{channel}/{thread}', 'ThreadController@destroy');
 Route::get('threads/{channel}', 'ThreadController@index');
+//话题锁定
+Route::post('locked-threads/{thread}', 'LockedThreadController@store')->name('locked-threads.store');
+Route::delete('locked-threads/{thread}', 'LockedThreadController@destroy')->name('locked-threads.destroy');
 
 //回复
 Route::post('threads/{channel}/{thread}/replies', 'ReplyController@store');

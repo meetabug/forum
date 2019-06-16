@@ -2,6 +2,17 @@
 
 use Faker\Generator as Faker;
 
+$factory->state(App\User::class, 'unconfirmed', function () {
+    return [
+        'confirmed' => false,
+    ];
+});
+
+$factory->state(App\User::class, 'administrator', function () {
+    return [
+        'name' => 'admin',
+    ];
+});
 
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
@@ -36,6 +47,7 @@ $factory->define(App\Thread::class, function ($faker) {
         'body'       => $faker->paragraph,
         'visits'     => 0,
         'slug'       => str_slug($title),
+        'locked'     => false,
     ];
 });
 
@@ -51,3 +63,5 @@ $factory->define(App\Reply::class, function (Faker $faker) {
         'body'      => $faker->paragraph,
     ];
 });
+
+
