@@ -22,6 +22,7 @@ class CreateThreadsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->unsignedInteger('replies_count')->default(0);
             $table->unsignedInteger('visits')->default(0);
+            $table->unsignedInteger('best_reply_id')->nullable();
             $table->timestamps();
         });
     }

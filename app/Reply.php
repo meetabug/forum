@@ -13,7 +13,7 @@ class Reply extends Model
 
     protected $with = ['owner', 'favorites'];
 
-    protected $appends = ['isFavorited', 'favoritesCount'];
+    protected $appends = ['isFavorited', 'favoritesCount', 'isBest'];
 
     protected static function boot()
     {
@@ -24,6 +24,10 @@ class Reply extends Model
         });
 
         static::deleted(function ($reply) {
+            if ($reply->id == $reply->thread->best_reply_id) {
+                $reply->thread->update(['best_reply_id' => null]);
+            }
+
             $reply->thread->decrement('replies_count');
         });
     }
@@ -45,7 +49,7 @@ class Reply extends Model
 
     public function mentionedUsers()
     {
-        preg_match_all('/@([\w\-]+)/',$this->body,$matches);
+        preg_match_all('/@([\w\-]+)/', $this->body, $matches);
 
         return $matches[1];
     }
@@ -59,4 +63,15 @@ class Reply extends Model
     {
         $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profiles/$1">$0</a>', $body);
     }
+
+    public function isBest()
+    {
+        return $this->thread->best_reply_id == $this->id;
+    }
+
+    public function getIsBestAttribute()
+    {
+        return $this->isBest();
+    }
+
 }
